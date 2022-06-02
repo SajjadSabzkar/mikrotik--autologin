@@ -23,3 +23,4 @@ python2 mtlogin.py username password
 * hashlib
 * httplib2
 * urllib
+* colorama
