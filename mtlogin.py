@@ -8,6 +8,7 @@ from httplib2 import Http
 from md5 import md5
 import re
 from urllib import urlencode
+from colorama import Fore
 
 URL = 'http://login.skstp/login'
 output = '/tmp/login.html'
@@ -32,7 +33,7 @@ def extract_salt(file):
     r = re.compile("\\\\\d*")
     salt = r.findall(li)
     if not salt:
-        print 'seems to be already logged in'
+        print '%sseems to be already logged in' %(Fore.GREEN)
         exit()
     x = chr(int(salt[0][1:], 8))
     rest = salt[1:]
@@ -59,7 +60,7 @@ def main():
         username = argz[0]
         password = argz[1]
     except Exception:
-        print 'could not parse arguments\nusage: python main.py username password'
+        print '%scould not parse arguments\nusage: python main.py username password' %(Fore.RED)
         exit()
     response, content = h.request(URL)
     assert(response.status==200)
@@ -69,12 +70,12 @@ def main():
     f.flush()
     x, y = extract_salt(output)
     salted = x + password + y
-    print 'salted password: %s' % salted
+    #print 'salted password: %s' % salted
     hashed_password = md5(salted)
     hex_hash_password = hashed_password.hexdigest()
-    print 'hashed password: %s' % hex_hash_password
+    #print 'hashed password: %s' % hex_hash_password
     login(username, hex_hash_password)
-    print 'Successfully logged in ;)'
+    print '%sSuccessfully logged in ;)' %(Fore.GREEN)
     
 if __name__ == '__main__':
     main()
