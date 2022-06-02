@@ -9,7 +9,7 @@ from md5 import md5
 import re
 from urllib import urlencode
 
-URL = 'http://10.0.0.2/login'
+URL = 'http://login.skstp/login'
 output = '/tmp/login.html'
 salt_pattern = '\\\\\d*'
 h = Http()
