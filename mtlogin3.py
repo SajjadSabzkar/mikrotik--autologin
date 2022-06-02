@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 '''
-Created on Oct 22, 2011
+Created on Jun 2, 2022
 
-@author: arefaey
+@author: arefaey , SajjadSabzkar
 '''
 from httplib2 import Http , ServerNotFoundError
 from hashlib import md5
@@ -32,7 +32,7 @@ def extract_salt(file):
     r = re.compile("\\\\\d*")
     salt = r.findall(li)
     if not salt:
-        print ('seems to be already logged in')
+        print(f'{Fore.GREEN}seems to be already logged in')
         exit()
     x = chr(int(salt[0][1:], 8))
     rest = salt[1:]
