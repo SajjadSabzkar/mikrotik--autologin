@@ -4,7 +4,7 @@ Created on Oct 22, 2011
 
 @author: arefaey
 '''
-from httplib2 import Http
+from httplib2 import Http , ServerNotFoundError
 from hashlib import md5
 import re
 from urllib.parse import urlencode
@@ -68,7 +68,11 @@ def main():
     except Exception:
         print (f'{Fore.RED}could not parse arguments\nusage: python3 mtlogin3.py username password')
         exit()
-    response, content = h.request(URL)
+    try:
+        response, content = h.request(URL)
+    except ServerNotFoundError: 
+        print(f'{Fore.RED}seems you are not connected to {URL}. Please check your connection or change url from this script.')
+        exit()
     assert(response.status==200)
     truncate_file(output)
     f = open(output, 'wb')
