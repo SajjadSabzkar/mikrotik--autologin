@@ -74,6 +74,9 @@ def main():
         print(f'{Fore.RED}seems you are not connected to {URL}. Please check your connection or change url from this script.')
         exit()
     assert(response.status==200)
+    if "Hi," in str(content):
+        print(f'{Fore.GREEN}seems to be already logged in')
+        return 
     truncate_file(output)
     f = open(output, 'wb')
     f.write(content)
