@@ -45,14 +45,17 @@ def login(username, password):
     headers = {}
     headers.update({'Content-Type':'application/x-www-form-urlencoded'})
     response, _ = h.request(URL, method='POST', body=payload, headers=headers)
-    #print (response ) 
+    #print (response , _ ) 
     assert(response.status==200)
     try:
         response['content-length'] == 940
-        if "CreditTraffic" in str(_) :
-            print(f"{Fore.RED}Your traffic seems finished , Please charge it ")
+        if "RADIUS server is not responding" in str(_):
+            print(f'{Fore.RED}RADUIS server is not responding... somethings seems wrong. please check your username and password!!! ')
             return
-        print(f"{Fore.GREEN}Successfullyy logged in ;)")
+        if "CreditTraffic" in str(_) :
+            print(f"{Fore.RED}Your traffic seems finished, Please charge it! ")
+            return
+        print(f"{Fore.GREEN}Successfullyy logged in ;) ")
     except KeyError:
         raise Exception('Login Failed')
 
@@ -63,7 +66,7 @@ def main():
         username = argz[0]
         password = argz[1]
     except Exception:
-        print (f'{Fore.RED}could not parse arguments\nusage: python main.py username password')
+        print (f'{Fore.RED}could not parse arguments\nusage: python3 mtlogin3.py username password')
         exit()
     response, content = h.request(URL)
     assert(response.status==200)
